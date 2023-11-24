@@ -2,11 +2,11 @@ import { PriorityMapType, PriorityType, TodoType } from "./types";
 
 export const priorityMap: PriorityMapType = {
   low: {
-    color: "green-500",
+    color: "#4ade80",
     tooltipContent: "Low Priority",
   },
-  medium: { color: "yellow-500", tooltipContent: "Medium Priority" },
-  high: { color: "red-600", tooltipContent: "High Priority" },
+  medium: { color: "#eab308", tooltipContent: "Medium Priority" },
+  high: { color: "#f87171", tooltipContent: "High Priority" },
 };
 
 export const priorities: PriorityType[] = ["high", "medium", "low"];

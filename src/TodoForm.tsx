@@ -57,7 +57,7 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
       />
 
       <button type="submit" className="ml-auto" data-tooltip-id={"add-todo"}>
-        <Calendar color="#a18aff" size={20} />
+        <Calendar color="#a18aff" size={24} />
       </button>
       <Tooltip id="add-todo" content={"Add Todo"} />
     </form>

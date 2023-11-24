@@ -48,7 +48,8 @@ function App() {
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="bg-[#a18aff] rounded-3xl border-[5px] p-2 max-h-[80%] h-[80%] overflow-auto flex flex-col items-center w-[35%]">
-        <h1 className="text-[20px] font-bold text-white">Todo List</h1>
+        <h1 className="font-bold text-white text-[24px]">Todo List</h1>
+
         <TodoForm addTodo={addTodo} />
         <TodoList todos={todos} deleteTodo={removeTodo} editTodo={modifyTodo} />
       </div>
