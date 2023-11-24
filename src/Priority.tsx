@@ -14,6 +14,7 @@ const Priority: React.FC<PriorityProps> = ({
   return (
     <>
       <button
+        type="button"
         name={priority}
         onClick={onClick}
         data-tooltip-id={`${priority}-priority-tooltip`}

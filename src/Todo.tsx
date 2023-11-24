@@ -14,6 +14,7 @@ const Todo: React.FC<TodoProps> = ({ todo, deleteTodo, editTodo }) => {
   const [editedPriority, setEditedPriority] = useState<PriorityType>(
     todo.priority
   );
+  const [error, setError] = useState<boolean>(false);
 
   const handleDelete = () => {
     deleteTodo(todo.id);
@@ -24,14 +25,20 @@ const Todo: React.FC<TodoProps> = ({ todo, deleteTodo, editTodo }) => {
   };
 
   const handleSave = () => {
+    if (editedTitle.trim() === "") {
+      setError(true);
+      return;
+    }
     const updatedTodo = {
       title: editedTitle,
       description: editedDescription,
       priority: editedPriority,
       id: todo.id,
+      completed: todo.completed,
     };
     editTodo(todo.id, updatedTodo);
     setIsEditing(false);
+    setError(false);
   };
 
   const priorityChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -39,7 +46,11 @@ const Todo: React.FC<TodoProps> = ({ todo, deleteTodo, editTodo }) => {
   };
 
   return (
-    <div className="flex items-center w-full gap-5 px-3 py-1 bg-white border rounded-lg">
+    <div
+      className={`flex items-center w-full gap-5 px-3 py-1 bg-white border rounded-lg ${
+        error ? "border-2 border-red-600" : ""
+      }`}
+    >
       {isEditing ? (
         <>
           <ul className="flex items-center justify-center gap-1.5">
@@ -56,7 +67,10 @@ const Todo: React.FC<TodoProps> = ({ todo, deleteTodo, editTodo }) => {
             type="text"
             placeholder="What is your next task?"
             value={editedTitle}
-            onChange={(e) => setEditedTitle(e.target.value)}
+            onChange={(e) => {
+              setError(false);
+              setEditedTitle(e.target.value);
+            }}
             className="p-1 w-[70%] outline-none"
           />
           <div className="flex gap-3 ml-auto">

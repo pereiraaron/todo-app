@@ -9,33 +9,43 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   const [title, setTitle] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [priority, setPriority] = useState<PriorityType>("low");
+  const [error, setError] = useState<boolean>(false);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setError(false);
     setTitle(e.target.value);
   };
 
   const handlePriorityChange = (selectedPriority: PriorityType) => {
+    setError(false);
     setPriority(selectedPriority);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (title.trim() !== "") {
-      addTodo({
-        id: Date.now().toString(),
-        title,
-        description,
-        priority,
-      });
-      setTitle("");
-      setDescription("");
+    if (title.trim() === "") {
+      setError(true);
+      return;
     }
+
+    addTodo({
+      id: Date.now().toString(),
+      title,
+      description,
+      priority,
+      completed: false,
+    });
+    setTitle("");
+    setDescription("");
+    setError(false);
   };
 
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[90%] gap-5 rounded-lg p-1 px-2 flex mt-8 bg-white border items-center"
+      className={`w-[90%] gap-5 rounded-lg p-1 px-2 flex mt-8 bg-white border ${
+        error ? "border-red-600 border-2" : ""
+      } items-center`}
     >
       <ul className="flex items-center justify-center gap-1.5">
         {priorities.map((priorityItem: PriorityType) => (
