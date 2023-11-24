@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { PriorityType, TodoFormProps } from "./lib/types";
-import { Calendar, PlusCircle, XCircle } from "lucide-react";
-import { priorities } from "./lib/helper";
+import { PriorityType, TodoFormProps } from "../lib/types";
+import { priorities } from "../lib/helper";
 import Priority from "./Priority";
-import Tooltip from "./Tooltip";
+import IconButton from "./IconButton";
 
 const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
   const [title, setTitle] = useState<string>("");
@@ -27,6 +26,10 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
     setPriority(selectedPriority);
   };
 
+  const handleToggleDescription = () => {
+    setShowDescription(!showDescription);
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setShowDescription(false);
@@ -46,6 +49,30 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
     setDescription("");
     setError(false);
   };
+
+  const renderDescriptionInput = () => {
+    if (showDescription) {
+      return (
+        <input
+          type="text"
+          placeholder="Add description"
+          value={description}
+          onChange={handleDescriptionChange}
+          className="w-full p-1 text-sm text-gray-500 grow"
+        />
+      );
+    }
+    return null;
+  };
+
+  const renderToggleButton = () => (
+    <IconButton
+      onIconClick={handleToggleDescription}
+      tooltipId="toggle-desc"
+      icon={!showDescription ? "expand" : "shrink"}
+      tooltipContent={!showDescription ? "Add Description" : "Close"}
+    />
+  );
 
   return (
     <form
@@ -73,36 +100,19 @@ const TodoForm: React.FC<TodoFormProps> = ({ addTodo }) => {
             onChange={handleTitleChange}
             className="p-1 w-[70%] grow outline-none"
           />
-
-          <button
-            type="button"
-            className="flex items-center gap-1 cursor-pointer"
-            onClick={() => setShowDescription(!showDescription)}
-          >
-            {!showDescription ? (
-              <PlusCircle color="#a18aff" size={16} />
-            ) : (
-              <XCircle color="#a18aff" size={16} />
-            )}
-          </button>
+          {renderToggleButton()}
         </div>
-        {showDescription && (
-          <div>
-            <input
-              type="text"
-              placeholder="Add description"
-              value={description}
-              onChange={handleDescriptionChange}
-              className="w-full p-1 outline-none grow"
-            />
-          </div>
-        )}
+        {renderDescriptionInput()}
       </div>
 
-      <button type="submit" className="ml-auto" data-tooltip-id={"add-todo"}>
-        <Calendar color="#a18aff" size={24} />
-      </button>
-      <Tooltip id="add-todo" content={"Add Todo"} />
+      <IconButton
+        onIconClick={handleSubmit}
+        icon="add"
+        type="submit"
+        tooltipId="add-todo"
+        tooltipContent="Add Todo"
+        size={20}
+      />
     </form>
   );
 };

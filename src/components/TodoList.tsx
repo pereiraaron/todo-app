@@ -1,5 +1,5 @@
 import React from "react";
-import { TodoListProps } from "./lib/types";
+import { TodoListProps, TodoType } from "../lib/types";
 import Todo from "./Todo";
 
 const TodoList: React.FC<TodoListProps> = ({
@@ -9,11 +9,11 @@ const TodoList: React.FC<TodoListProps> = ({
   toggleTodoCompletion,
 }) => {
   return (
-    <ul className="w-full flex px-3 flex-col gap-4  max-h-[70%] overflow-auto">
-      {todos.map((todo) => (
+    <ul className="w-full flex px-3 flex-col gap-4 max-h-[70%] overflow-auto">
+      {todos.map((singleTodo: TodoType) => (
         <Todo
-          key={todo.id}
-          todo={todo}
+          key={singleTodo.id}
+          todo={singleTodo}
           deleteTodo={deleteTodo}
           editTodo={editTodo}
           toggleTodoCompletion={toggleTodoCompletion}

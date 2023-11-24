@@ -1,10 +1,24 @@
 import {
+  Calendar,
+  CheckSquare,
+  Edit,
+  PlusCircle,
+  Save,
+  Trash2,
+  XCircle,
+} from "lucide-react";
+import {
   DropDownOptionType,
+  IconMapType,
   PriorityMapType,
   PriorityType,
   TodoType,
 } from "./types";
 
+/**
+ * Map defining priority settings for different priority levels.
+ * @type {PriorityMapType}
+ */
 export const priorityMap: PriorityMapType = {
   low: {
     color: "#4ade80",
@@ -16,11 +30,23 @@ export const priorityMap: PriorityMapType = {
     tooltipContent: "Medium Priority",
     priorityOrder: 2,
   },
-  high: { color: "#f87171", tooltipContent: "High Priority", priorityOrder: 1 },
+  high: {
+    color: "#f87171",
+    tooltipContent: "High Priority",
+    priorityOrder: 1,
+  },
 };
 
+/**
+ * List of available priority levels.
+ * @type {PriorityType[]}
+ */
 export const priorities: PriorityType[] = ["high", "medium", "low"];
 
+/**
+ * Sample todo data for initial rendering.
+ * @type {TodoType[]}
+ */
 export const dummyData: TodoType[] = [
   {
     id: "12345",
@@ -45,21 +71,27 @@ export const dummyData: TodoType[] = [
   },
 ];
 
+/**
+ * Options for filtering todos.
+ * @type {DropDownOptionType[]}
+ */
 export const todoFilterOptions: DropDownOptionType[] = [
-  {
-    value: "default",
-    displayText: "Default",
-  },
-  {
-    value: "high",
-    displayText: "High",
-  },
-  {
-    value: "medium",
-    displayText: "Medium",
-  },
-  {
-    value: "low",
-    displayText: "Low",
-  },
+  { value: "default", displayText: "Default" },
+  { value: "high", displayText: "High" },
+  { value: "medium", displayText: "Medium" },
+  { value: "low", displayText: "Low" },
 ];
+
+/**
+ * Mapping of actions to corresponding icons.
+ * @type {IconMapType}
+ */
+export const iconMap: IconMapType = {
+  save: Save,
+  delete: Trash2,
+  edit: Edit,
+  complete: CheckSquare,
+  add: Calendar,
+  shrink: XCircle,
+  expand: PlusCircle,
+};

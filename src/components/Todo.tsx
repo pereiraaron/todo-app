@@ -1,9 +1,8 @@
 import React, { useState } from "react";
-import { PriorityType, TodoProps } from "./lib/types";
+import { PriorityType, TodoProps } from "../lib/types";
+import { priorities } from "../lib/helper";
 import Priority from "./Priority";
-import { priorities } from "./lib/helper";
-import { Save, Trash2, Edit, CheckSquare } from "lucide-react";
-import Tooltip from "./Tooltip";
+import IconButton from "./IconButton";
 
 const Todo: React.FC<TodoProps> = ({
   todo,
@@ -57,8 +56,10 @@ const Todo: React.FC<TodoProps> = ({
   return (
     <div
       className={`flex items-center w-full gap-5 px-3 py-1 ${
-        todo.completed ? "bg-gray-300 opacity-1 cursor-not-allowed" : "bg-white"
-      } border rounded-lg ${error ? "border-2 border-red-600" : ""}`}
+        todo.completed
+          ? "bg-gray-300 opacity-1 cursor-not-allowed py-2"
+          : "bg-white"
+      }  rounded-lg ${error ? "border-2 border-red-600" : ""}`}
     >
       {isEditing ? (
         <>
@@ -81,8 +82,8 @@ const Todo: React.FC<TodoProps> = ({
                 setError(false);
                 setEditedTitle(e.target.value);
               }}
-              className="w-full p-1 border outline-none"
-            />{" "}
+              className="w-full p-1 text-sm"
+            />
             {todo.description && (
               <input
                 type="text"
@@ -92,26 +93,24 @@ const Todo: React.FC<TodoProps> = ({
                   setError(false);
                   setEditedDescription(e.target.value);
                 }}
-                className="w-full p-1 border outline-none"
+                className="w-full p-1 text-xs "
               />
             )}
           </div>
 
           <div className="flex gap-3 ml-auto">
-            <button
-              type="button"
-              onClick={handleSave}
-              data-tooltip-id={"save-todo"}
-            >
-              <Save color="#a18aff" size={16} />
-            </button>
-            <button
-              type="button"
-              onClick={handleDelete}
-              data-tooltip-id={"delete-todo"}
-            >
-              <Trash2 color="#a18aff" size={16} />
-            </button>
+            <IconButton
+              onIconClick={handleSave}
+              tooltipId="save-todo"
+              icon={"save"}
+              tooltipContent="Save Todo"
+            />
+            <IconButton
+              onIconClick={handleDelete}
+              tooltipId="delete-todo"
+              icon={"delete"}
+              tooltipContent="Delete Todo"
+            />
           </div>
         </>
       ) : (
@@ -125,48 +124,43 @@ const Todo: React.FC<TodoProps> = ({
               />
             </div>
           )}
-          <div>
-            <h3 className={`${todo.completed ? "line-through" : ""}`}>
+          <div className="flex flex-col max-w-[70%] gap-1 py-1">
+            <h3 className={`${todo.completed ? "line-through" : ""} text-sm`}>
               {todo.title}
-            </h3>{" "}
+            </h3>
             {todo.description && (
-              <p className="text-sm text-gray-600">{todo.description}</p>
+              <p className="text-xs text-gray-600 break-words">
+                {todo.description}
+              </p>
             )}
           </div>
           <div className="flex gap-3 ml-auto">
             {!todo.completed && (
               <>
-                <button
-                  type="button"
-                  onClick={handleComplete}
-                  data-tooltip-id="completed-todo"
-                >
-                  <CheckSquare color="#a18aff" size={16} />
-                </button>
-                <button
-                  type="button"
-                  onClick={handleEdit}
-                  data-tooltip-id={"edit-todo"}
-                >
-                  <Edit color="#a18aff" size={16} />
-                </button>
+                <IconButton
+                  onIconClick={handleComplete}
+                  tooltipId="completed-todo"
+                  icon={"complete"}
+                  tooltipContent={"Mark as completed"}
+                />
+                <IconButton
+                  onIconClick={handleEdit}
+                  tooltipId="edit-todo"
+                  icon={"edit"}
+                  tooltipContent={"Edit Todo"}
+                />
               </>
             )}
 
-            <button
-              type="button"
-              onClick={handleDelete}
-              data-tooltip-id={"delete-todo"}
-            >
-              <Trash2 color="#a18aff" size={16} />
-            </button>
+            <IconButton
+              onIconClick={handleDelete}
+              tooltipId="delete-todo"
+              icon={"delete"}
+              tooltipContent={"Delete Todo"}
+            />
           </div>
         </>
-      )}{" "}
-      <Tooltip id="delete-todo" content={"Delete Todo"} />
-      <Tooltip id="edit-todo" content={"Edit Todo"} />
-      <Tooltip id="save-todo" content={"Save Todo"} />
-      <Tooltip id="completed-todo" content={"Mark as completed"} />
+      )}
     </div>
   );
 };

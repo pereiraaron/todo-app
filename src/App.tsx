@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
-import { PriorityType, TodoType } from "./lib/types";
-import TodoList from "./TodoList";
-import TodoForm from "./TodoForm";
+import { useEffect, useState } from "react";
+import { TodoType } from "./lib/types";
+import TodoList from "./components/TodoList";
+import TodoForm from "./components/TodoForm";
 import { dummyData, priorityMap, todoFilterOptions } from "./lib/helper";
-import ToDoDropdown from "./ToDoDropdown";
+import ToDoDropdown from "./components/ToDoDropdown";
 
 function App() {
   const [todos, setTodos] = useState<TodoType[]>([]);
