@@ -6,12 +6,14 @@ export interface TodoListProps {
   todos: TodoType[];
   deleteTodo: (todoId: string) => void;
   editTodo: (todoId: string, updatedTodo: TodoType) => void;
+  toggleTodoCompletion: (todoId: string) => void;
 }
 
 export interface TodoProps {
   todo: TodoType;
   deleteTodo: (todoId: string) => void;
   editTodo: (todoId: string, updatedTodo: TodoType) => void;
+  toggleTodoCompletion: (todoId: string) => void;
 }
 
 export interface PriorityProps {
@@ -24,6 +26,12 @@ export interface TooltipProps {
   id: string;
   content: string;
   align?: PlacesType;
+}
+
+export interface ToDoDropdownProps {
+  selected: any;
+  handleSelect: (criteria: string) => void;
+  options: DropDownOptionType[];
 }
 
 export type PriorityType = "high" | "medium" | "low";
@@ -47,11 +55,18 @@ export type TodoType = {
   title: string;
   description?: string;
   priority: PriorityType;
+  completed: boolean;
 };
 
 export type PriorityMapType = {
   [key in PriorityType]: {
     color: string;
     tooltipContent: string;
+    priorityOrder: number;
   };
+};
+
+export type DropDownOptionType = {
+  displayText: string;
+  value: any;
 };
